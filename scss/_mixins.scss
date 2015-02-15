@@ -1,0 +1,75 @@
+
+
+//\\========Ez 10-col-grid========\\//
+// @mixin col_width($width){
+//     .w#{$width} {
+//         width:unquote(($width*10)+"%");
+//         @extend .col;
+//     }
+// }
+// //call all the classes
+// @for $i from 1 through 10 {
+//     @include col_width($i);
+// }
+
+
+
+// We need a different approach though regarding more or less than 10 column grids
+// We have to divide by the number of total cols and then multiply 
+// with the number of cols that we want to take space. For example if we want a 12 column grid we would divide
+// 100/12 and then multiply it each time to take all the percents.
+
+//\\========Ez custom-col-grid========\\// // .col-#{$columns}-of-#{$total_columns} 
+
+@mixin multi_grid($total_columns, $columns, $screen) {
+  @if $screen == $breakpoint-2 {
+      .med#{$columns}-#{$total_columns}.columns {
+          width: unquote((100/$total_columns) * $columns + "%");   
+      }
+      
+    }
+    @elseif $screen == $breakpoint-3 {
+      .sm#{$columns}-#{$total_columns}.columns {
+          width: unquote((100/$total_columns) * $columns + "%");   
+      }
+    }
+    @else {
+      @if $total_columns == 10 {
+        .w#{$columns}.columns {
+            width: unquote((100/$total_columns) * $columns + "%");   
+        }
+      }
+      @else {
+      .w#{$columns}-#{$total_columns}.columns { 
+          width: unquote((100/$total_columns) * $columns + "%");   
+      }
+    }
+  }
+}
+
+@mixin color_class($color){
+    .#{$color}.color {
+        background-color: $color;
+        height: 100%;
+        //     @if $color == red {
+        //     border:1px solid black;
+        // }
+    }
+}
+
+@mixin body-reset {
+  body  {margin:0;padding:0;}
+}
+@mixin grid-warning {
+    @warn "Please have in mind that the 10-col-grid is missing by default the 3 and the 4 column layout, instead we custom add classes 'w33', 'w25', 'w66' and 'w75'";
+}
+
+
+
+
+
+
+
+
+
+
